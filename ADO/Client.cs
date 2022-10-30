@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace EF
 {
-    class SQL_Table
+    class Client
     {
+        /// <summary>
+        /// Id
+        /// </summary>
+        public string ClientId { get; set; }
+
         /// <summary>
         /// Фамилия
         /// </summary>
@@ -34,15 +39,17 @@ namespace EF
         public string Email { get; set; }
 
         /// <summary>
-        /// 
+        /// Конструктор с параметрами
         /// </summary>
+        /// <param name="clientId">Id</param>
         /// <param name="surname">Фамилия</param>
         /// <param name="name">Имя</param>
         /// <param name="lastName">Отчество</param>
         /// <param name="telephone">Телефон</param>
         /// <param name="email">Электронная почта</param>
-        public SQL_Table(string surname, string name, string lastName, string telephone, string email)
+        public Client(string clientId, string surname, string name, string lastName, string telephone, string email)
         {
+            ClientId = clientId;
             Surname = surname;
             Name = name;
             LastName = lastName;
@@ -50,6 +57,11 @@ namespace EF
             Email = email;
         }
 
-        public SQL_Table() { }
+        public Client() { }
+
+        public override string ToString()
+        {
+            return $"{ClientId} {Surname} {Name} {LastName} {Telephone} {Email}";
+        }
     }
 }
