@@ -36,6 +36,8 @@ namespace EF
 
             workWithData.sqlConnection.StateChange += new StateChangeEventHandler(OnStateChange);
             workWithData.oleDbConnection.StateChange += new StateChangeEventHandler(OnStateChange);
+            
+            //new SQL_CodeFirst().Show();
         }
 
         #region Методы
@@ -84,6 +86,11 @@ namespace EF
         private void AccessTableShowButton_Click(object sender, RoutedEventArgs e)
         {
             new Access_Window().Show();
+        }
+
+        private void ProductsTableShowButton_Click(object sender, RoutedEventArgs e)
+        {
+            new Products_Window().Show();
         }
     }
 }

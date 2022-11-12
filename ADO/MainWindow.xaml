@@ -18,7 +18,8 @@
         <Label Content="Состояние" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Grid.Column="0"/>
         <TextBox x:Name="SqlConnectionStateTextBox" HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Grid.Column="0"/>        
         <Button x:Name="SqlInfoShowButton" Content="Открыть соединение с SQL" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Grid.Column="0" Click="SqlInfoShowButton_Click"/>
-        <Button x:Name="SqlTableShowButton" Content="Открыть таблицу SQL" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top" Grid.Column="0" Click="SqlTableShowButton_Click"/>
+        <Button x:Name="SqlTableShowButton" Content="Открыть таблицу Клиенты" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top" Grid.Column="0" Click="SqlTableShowButton_Click"/>
+        <Button x:Name="ProductsTableShowButton" Content="Открыть таблицу Товары" HorizontalAlignment="Center" Margin="0,280,0,0" VerticalAlignment="Top" Grid.Column="0" Click="ProductsTableShowButton_Click"/>
 
         <Label Content="Строка подключения к Access" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <TextBox x:Name="AccessConnectionStringTextBox" HorizontalAlignment="Center" Margin="0,30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Grid.Column="1"/>

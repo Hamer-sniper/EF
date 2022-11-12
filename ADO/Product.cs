@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EF
 {
-    class Product
+    public class Product
     {
         /// <summary>
         /// Id
@@ -29,9 +29,8 @@ namespace EF
         public string ProductName { get; set; }
 
         /// <summary>
-        /// Конструктор с параметрами
+        /// Конструктор со всеми параметрами
         /// </summary>
-        /// <param name="productId">Id</param>
         /// <param name="email">Электронная почта</param>
         /// <param name="productCode">Код товара</param>
         /// <param name="productName">Наименование товара</param>
@@ -43,6 +42,23 @@ namespace EF
             ProductName = productName;
         }
 
+        /// <summary>
+        /// Конструктор с автоподстановкой GIUD
+        /// </summary>
+        /// <param name="email">Электронная почта</param>
+        /// <param name="productCode">Код товара</param>
+        /// <param name="productName">Наименование товара</param>
+        public Product(string email, string productCode, string productName)
+            : this (Guid.NewGuid().ToString(), email, productCode, productName)
+        {
+            Email = email;
+            ProductCode = productCode;
+            ProductName = productName;
+        }
+
+        /// <summary>
+        /// Конструктор без параметров
+        /// </summary>       
         public Product() { }
 
         public override string ToString()

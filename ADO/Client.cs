@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EF
 {
-    class Client
+    public class Client
     {
         /// <summary>
         /// Id
@@ -39,7 +39,7 @@ namespace EF
         public string Email { get; set; }
 
         /// <summary>
-        /// Конструктор с параметрами
+        /// Конструктор со всеми параметрами
         /// </summary>
         /// <param name="clientId">Id</param>
         /// <param name="surname">Фамилия</param>
@@ -50,6 +50,25 @@ namespace EF
         public Client(string clientId, string surname, string name, string lastName, string telephone, string email)
         {
             ClientId = clientId;
+            Surname = surname;
+            Name = name;
+            LastName = lastName;
+            Telephone = telephone;
+            Email = email;
+        }
+
+        /// <summary>
+        /// Конструктор с автоподстановкой GUID
+        /// </summary>
+        /// <param name="clientId">Id</param>
+        /// <param name="surname">Фамилия</param>
+        /// <param name="name">Имя</param>
+        /// <param name="lastName">Отчество</param>
+        /// <param name="telephone">Телефон</param>
+        /// <param name="email">Электронная почта</param>
+        public Client(string surname, string name, string lastName, string telephone, string email)
+            : this (Guid.NewGuid().ToString(), surname, name, lastName, telephone, email)
+        {
             Surname = surname;
             Name = name;
             LastName = lastName;

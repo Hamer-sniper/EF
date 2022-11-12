@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,8 @@ namespace EF
     /// </summary>
     public partial class SQL_Window : Window
     {
+        ClientContext dbClient;
+
         WorkWithData workWithData = new WorkWithData();
 
         SqlConnection con;
@@ -32,7 +35,35 @@ namespace EF
         public SQL_Window()
         {
             InitializeComponent();
-            Preparing();
+            Preparing2();
+        }
+
+        /// <summary>
+        /// Новый код (для Entity Framework)
+        /// </summary>
+        private void Preparing2()
+        {
+            dbClient = new ClientContext();
+
+            if (dbClient.Database.Exists() == false)
+            {
+                //ExecuteSqlCommand("TRUNCATE TABLE [Clients]");
+
+                Client сlient1 = new Client("Иванов", "Иван", "Иванович", "89280070701", "abstractEmail1@mail.ru");
+                Client сlient2 = new Client("Петров", "Петр", "Петрович", "89280070702", "abstractEmail2@mail.ru");
+                Client сlient3 = new Client("Сидоров", "Сидр", "Сидорович", "89280070703", "abstractEmail3@mail.ru");
+                Client сlient4 = new Client("Маслов", "Масл", "Маслович", "89280070704", "abstractEmail4@mail.ru");
+
+                var storageClients = new List<Client>() { сlient1, сlient2, сlient3, сlient4 }; ;
+
+                foreach (var itemClient in storageClients)
+                    dbClient.Clients.Add(itemClient);
+
+                dbClient.SaveChanges();
+            }
+
+            dbClient.Clients.Load();
+            gridView.ItemsSource = dbClient.Clients.Local.ToBindingList();
         }
 
         private void Preparing()
@@ -100,28 +131,13 @@ namespace EF
         }
 
         /// <summary>
-        /// Начало редактирования 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GVCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-
-            row = (DataRowView)gridView.SelectedItem;
-            row.BeginEdit();
-            //da.Update(dt);
-        }
-
-        /// <summary>
         /// Редактирование записи
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GVCurrentCellChanged(object sender, EventArgs e)
         {
-            if (row == null) return;
-            row.EndEdit();
-            da.Update(dt);
+            dbClient.SaveChanges();
         }
 
         /// <summary>
@@ -131,9 +147,8 @@ namespace EF
         /// <param name="e"></param>
         private void MenuItemDeleteClick(object sender, RoutedEventArgs e)
         {
-            row = (DataRowView)gridView.SelectedItem;
-            row.Row.Delete();
-            da.Update(dt);
+            var client = (Client)gridView.SelectedItem;
+            dbClient.Clients.Remove(client);
         }
 
         /// <summary>
@@ -142,16 +157,14 @@ namespace EF
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuItemAddClick(object sender, RoutedEventArgs e)
-        {
-            DataRow r = dt.NewRow();
-            AddWindow add = new AddWindow(r);
-            add.ShowDialog();
+        {            
+            AddWindow add = new AddWindow(dbClient);
 
+            add.ShowDialog();
 
             if (add.DialogResult.Value)
             {
-                dt.Rows.Add(r);
-                da.Update(dt);
+                dbClient.SaveChanges();
             }
         }
 
@@ -162,13 +175,10 @@ namespace EF
         /// <param name="e"></param>
         private void MenuItemProductClick(object sender, RoutedEventArgs e)
         {
-            row = (DataRowView)gridView.SelectedItem;
-            new AllView(row).Show();
-        }
+            var client = (Client)gridView.SelectedItem;
 
-        /*private void AllViewShow(object sender, RoutedEventArgs e)
-        {
-            new AllView().ShowDialog();
-        }*/
+            Products_Window pd = new Products_Window(client.Email);
+            pd.Show();
+        }
     }
 }

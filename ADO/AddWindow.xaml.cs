@@ -20,9 +20,20 @@ namespace EF
     /// </summary>
     public partial class AddWindow : Window
     {
-        private AddWindow() 
+        public AddWindow() 
         {  
             InitializeComponent();
+        }
+
+        public AddWindow(ClientContext dbClient) : this()
+        {
+            cancelBtn.Click += delegate { this.DialogResult = false; };
+            okBtn.Click += delegate
+            {
+                Client сlient = new Client(txtSurname.Text, txtName.Text, txtMiddleName.Text, txtTelephone.Text, txtEmail.Text);
+                dbClient.Clients.Add(сlient);
+                this.DialogResult = !false;
+            };
         }
 
         public AddWindow(DataRow row):this()

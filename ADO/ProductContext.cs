@@ -8,11 +8,11 @@ using System.Windows.Markup;
 
 namespace EF
 {
-    public class ClientContext : DbContext
+    public class ProductContext : DbContext
     {
         public static string ConnectionString { get; set; }
 
-        static ClientContext()
+        static ProductContext()
         {
             Microsoft.Data.SqlClient.SqlConnectionStringBuilder sqlCon = new Microsoft.Data.SqlClient.SqlConnectionStringBuilder()
             {
@@ -27,8 +27,8 @@ namespace EF
             ConnectionString = sqlCon.ConnectionString;
         }
 
-        public ClientContext() : base(ConnectionString) { }
+        public ProductContext() : base(ConnectionString) { }
 
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
